@@ -2,9 +2,11 @@
 
 <h3 align="center">A fast async CLI file downloader written in Rust</h3>
 
+<div align="center">
 [Usage](#usage) •
 [Installation](#installation) •
-[Configuration](#configuration) •
+[Configuration](#configuration)
+</div>
 
 ---
 
