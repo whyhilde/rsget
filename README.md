@@ -1,6 +1,6 @@
 <h1 align="center">rsget</h1>
 
-A fast async CLI file downloader written in Rust
+<h3 align="center">A fast async CLI file downloader written in Rust</h3>
 
 [Usage](#usage) •
 [Installation](#installation) •
