@@ -15,6 +15,6 @@ async fn main() -> Result<()> {
 
     download::download(&args.url, &filename).await?;
 
-    println!("Downloaded: {}", filename); // ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    println!("Downloaded: {}", filename);
     Ok(())
 }
