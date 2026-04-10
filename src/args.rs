@@ -7,6 +7,9 @@ pub struct Args {
 
     #[arg(short, long)]
     pub output: Option<String>,
+
+    #[arg(short, long, action = clap::ArgAction::SetTrue)]
+    pub quiet: bool,
 }
 
 pub fn get_args() -> Args {

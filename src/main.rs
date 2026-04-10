@@ -13,8 +13,9 @@ async fn main() -> Result<()> {
         None => utils::extract_filename(&args.url),
     };
 
-    download::download(&args.url, &filename).await?;
+    let downloader = download::Downloader::new(args.url, filename, args.quiet);
 
-    println!("Downloaded: {}", filename);
+    downloader.download().await?;
+
     Ok(())
 }
