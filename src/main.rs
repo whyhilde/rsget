@@ -1,5 +1,6 @@
 mod args;
 mod download;
+mod progress;
 mod utils;
 
 use anyhow::Result;

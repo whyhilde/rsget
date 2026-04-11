@@ -1,9 +1,10 @@
 use anyhow::{Context, Ok, Result};
 use futures_util::StreamExt;
-use indicatif::{ProgressBar, ProgressStyle};
 use reqwest::Client;
 use tokio::fs::File;
 use tokio::io::AsyncWriteExt;
+
+use crate::progress::Progress;
 
 pub struct Downloader {
     client: Client,
@@ -31,26 +32,7 @@ impl Downloader {
 
         let total_size = response.content_length().unwrap_or(0);
 
-        let pb = if !self.quiet && total_size > 0 {
-            let pb = ProgressBar::new(total_size);
-            pb.set_style(
-                ProgressStyle::default_bar()
-                    .template("{spinner:.green} [{bar:40.cyan/blue}] {bytes}/{total_size} ({eta})")
-                    .unwrap()
-                    .progress_chars("#### "),
-            );
-            Some(pb)
-        } else if !self.quiet {
-            let pb = ProgressBar::new_spinner();
-            pb.set_style(
-                ProgressStyle::default_spinner()
-                    .template("{spinner:.green} {bytes} downloaded...")
-                    .unwrap(),
-            );
-            Some(pb)
-        } else {
-            None
-        };
+        let pb = Progress::new(total_size, self.quiet);
 
         let mut file = File::create(&self.output).await?;
 
@@ -64,14 +46,12 @@ impl Downloader {
 
             downloaded += chunk.len() as u64;
 
-            if let Some(pb) = &pb {
-                pb.set_position(downloaded);
-            }
+            pb.update(downloaded);
         }
 
-        if let Some(pb) = pb {
-            pb.finish_with_message("Download complete!");
-        }
+        file.flush().await?;
+
+        pb.finish();
 
         Ok(())
     }
