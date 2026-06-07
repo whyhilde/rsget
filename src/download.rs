@@ -9,6 +9,7 @@ use crate::progress::Progress;
 pub struct Downloader {
     client: Client,
     url: String,
+
     output: String,
     quiet: bool,
 }
