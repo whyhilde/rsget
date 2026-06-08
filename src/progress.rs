@@ -10,9 +10,9 @@ impl Progress {
             let pb = ProgressBar::new(total_size);
             pb.set_style(
                 ProgressStyle::default_bar()
-                    .template("{spinner:.green} |{bar:40.cyan/blue}| {bytes}/{total_bytes} ({eta})")
+                    .template("|{bar:40.cyan/blue}| {bytes} / {total_bytes} ({eta:>})")
                     .unwrap()
-                    .progress_chars("#### "),
+                    .progress_chars("▓░"),
             );
             Some(pb)
         } else {
